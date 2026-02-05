@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Forma</title>
+    <style>
+        body{
+            background: rebeccapurple;
+          
+        }
+        *{
+            box-sizing:border-box;
+            font-family:sans-serif;
+            color:#000;
+        }
+        h1{
+        color:#fff;
+            text-align:center;
+        }
+        form{
+            margin:auto;
+            width: 80dvw;
+            padding:25px;
+           background:#fff;
+            border-radius:10px;
+            backdrop-filter:blur(20px);
+        }
+        form *{
+            font-size:20px;
+        }
+        form input[type="text"],select{
+            width:100%;
+            padding:10px;
+            margin :10px 0;
+            border-radius:5px;
+            background: transparent;
+            outline:1px solid #ccc;
+            border:none;
+            }
+            form input[type="text"]:hover,select:hover{
+            outline: 2px solid rebeccapurple;
+        }
+        [type="submit"]{
+            background: rebeccapurple;
+            padding:10px;
+            display:block;
+            width:100%;
+            color:#fff;
+            border-radius:5px;
+            margin-top:40px;
+            cursor:pointer;
+            font-size:30px;
+        }
+        [type="submit"]:hover{
+            background:radial-gradient(purple,rebeccapurple);
+        }
+        [type="radio"]{
+            accent-color: rebeccapurple;
+        }
+    </style>
+</head>
+<body>
+  <h1>Form Dynamic </h1>
+  <form id="foodForm">
+      <input type="text" placeholder="Enter your name" required name="username">
+    <p> <b>What is your Gender?:</b></p>
+      <input type="radio" value="male" id="male" name="gender" required><label for="male">Male</label>
+      <input type="radio" value="female" id="female" name="gender" required><label for="female">Female</label><br><br>
+      <select id="race" required name="race">
+          <option hidden selected value="">Choose your race:</option>
+          <option value="black">Black</option>
+          <option value="asian">Asian</option>
+          <option value="white">White</option>
+          <option value="latin">Latin</option>
+      </select>
+      <select id="food" required name="foodc">
+          <option hidden selected value="">What Food do you want? :</option>
+          <option value="rice">Rice</option>
+          <option value="Swallow">Swallow</option>
+          <option value="bread and beans">Bread and beans</option>
+      </select>
+      <button type="submit" id="submitBtn" name="btn">Submit Details</button>
+  </form>
+  <script>
+      const foodForm = document.getElementById('foodForm')
+      const race = document.getElementById('race');
+      const food = document.getElementById('food');
+      const submitBtn = foodForm.btn
+      
+      const foods = {
+          black: ['Rice','Swallow','Bread and beans'],
+          asian: ['soup','noodles','spaghetti'],
+          white: ['Hotdog', 'Sausage', 'pizza'],
+          latin: ['sel', 'tuna','apple']
+      }
+      
+      race.onchange = () =>{
+      try{
+          let raceFood = foods[race.value]
+      
+      
+      //  alert(raceFood)
+      if(raceFood){
+        food.innerHTML = ''
+        food.innerHTML = '<option hidden selected value="">What Food do you want? :</option>'
+        for (i in raceFood){
+            let opt = document.createElement('option');
+            opt.setAttribute('value',raceFood[i])
+            opt.innerHTML = raceFood[i]
+            food.append(opt)
+        }
+        }else{
+           alert('Food not found!')
+        }
+        return 
+      }catch(error){
+          alert(error.message);
+      }}
+      
+      
+      foodForm.onsubmit = (e) =>{
+      
+          e.preventDefault()
+          const {username,gender,race,foodc}=foodForm
+          if (!foodc.value && !race.value){
+              return alert('fill the form completely!')
+          }
+          alert(username.value+', '+ gender.value+ ', '+ race.value + ', '+ foodc.value)
+          submitBtn.innerText="Form Submitted!"
+          return 
+      }
+  </script>
+</body>
+    </html>
